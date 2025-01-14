@@ -48,12 +48,9 @@ cols_with_missing <- apply(data23_1619, 2, function(x) any(is.na(x)))
 # Extract features with at least one missing value
 cols_with_missing_names <- names(data23_1619)[cols_with_missing] #183-1 out of 201-1 columns had at least one missing values, accounts for 91% of the whole features
 
-#generate 21 boots samples for data imputation (addressing 20.4% of missing obs)
-# Define the control parameters for train
-train_control <- trainControl(method = "boot", number = 21) # 21 bootstrap samples
 # Impute the missing values using bagging
 set.seed(7777)
-bagMissing <- preProcess(data23_1619, method = "bagImpute") #number of trees (boot samples) has been defined as 21
+bagMissing <- preProcess(data23_1619, method = "bagImpute") 
 data23_1619_imputed <- predict(bagMissing, newdata = data23_1619)
 
 #check if the imputed values are within the range of the original values
@@ -388,7 +385,6 @@ testSet <- data23_1619[-trainIndex,]
 # set.seed(1234)
 # trainingSet <- trainingSet[sample(nrow(trainingSet)), ]
 
-#############################################
 #############################################
 # Step 5 - training the random forest model #
 #############################################
